@@ -12,11 +12,11 @@ V2(TODO): remove introspection, use jpa (or something else) to create data in th
 # Launching
 Run Application
 
-# Legacy: How the pojo was created the first time
-#### get column name from csv & replace 'tab' with '\n'
-#### create column name in notepadd++, then apply regex
+### Legacy: How the pojo was created the first time
+##### get column name from csv & replace 'tab' with '\n'
+##### create column name in notepadd++, then apply regex
     search: (é)|(\/)|(è)|(ô)|(à)|(d')|(\))|(^\w)|[^\w\n]+(\w)
     replaceby: (?1e)(?2)(?3e)(?4o)(?5a)(?6)(?6)(?8\L$8)(?9\U$9)
-#### some manual cleanup
+##### some manual cleanup
 
 

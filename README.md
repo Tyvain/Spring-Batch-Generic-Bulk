@@ -6,8 +6,8 @@
 The goal is to have the fields declared only once, in the pojo (Student.java). No sql file (the table should be create by the application if not exists)
 
 # Version
-V1: generic write with introspection, sql file, no read, no jpa
-V2(TODO): remove introspection, use jpa (or something else) to create data in the table
+- V1: generic write with introspection, sql file, no read, no jpa
+- V2(TODO): remove introspection, use jpa (or something else) to create data in the table
 
 # Launching
 Run Application

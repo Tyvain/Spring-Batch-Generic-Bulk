@@ -1,6 +1,20 @@
 package student.model;
 
-public class Student {    
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = Student.TABLE_NAME)
+public class Student {
+    public final static String TABLE_NAME = "STUDENT";
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     private String groupe;
     private String classement;
     private String codeAmenagementOuiSi;
@@ -75,8 +89,104 @@ public class Student {
     private String ficheDeReorientation;
     private String anneeDEntreeEnSeconde;
     private String dossierDematerialise;
-    private String dossierPapier;    
-    
+    private String dossierPapier;
+
+    public Student() {
+	// default constructor
+    }
+
+    public Student(String groupe, String classement, String codeAmenagementOuiSi, String numero, String codeFormation, String formation, String filiere, String nom, String prenom, String libelleGroupe, String deuxiemePrenom, String troisiemePrenom, String civilite, String sexe, String dateDeNaissance,
+	    String villeDeNaissance, String departementDeNaissance, String paysDeNaissance, String nationalite, String boursierDesLycees, String boursier, String boursierCertifie, String nombreDePartsOuEchelon, String aCBCode, String profilDuCandidat, String typeEtablissement, String contratEtablissement,
+	    String uAIEtablissement, String libelleEtablissement, String communeEtablissement, String departementEtablissement, String paysEtablissement, String telephoneEtablissement, String faxEtablissement, String niveauDEtudeActuelle, String numeroINE, String numeroCEF, String typeDeFormation,
+	    String serieDomaineFiliere, String classe, String optionInternationale, String dominante, String specialiteMentionVoie, String lV1Scolarite, String lV2Scolarite, String lV3Scolarite, String option1, String option2, String diplome, String serieDiplome, String dominanteDiplome, String specialiteDiplome,
+	    String mentionDiplome, String moisEtAnneeDObtentionDuBac, String academieDuBac, String lV1Bac, String lV2Bac, String optionDuBac, String diplomeEtranger, String testDeFrançais, String niveauDeFrançais, String dateTestDeFrançais, String amenagementHandicap, String dateDeValidation,
+	    String candidatureValideeON, String sportifDeHautNiveau, String artisteDeHautNiveau, String dateInscription, String dateDImpression, String ficheImprimeeON, String eligibleALaPolitiqueDeLaVille, String ficheDeReorientation, String anneeDEntreeEnSeconde, String dossierDematerialise, String dossierPapier) {
+	super();
+	this.groupe = groupe;
+	this.classement = classement;
+	this.codeAmenagementOuiSi = codeAmenagementOuiSi;
+	this.numero = numero;
+	this.codeFormation = codeFormation;
+	this.formation = formation;
+	this.filiere = filiere;
+	this.nom = nom;
+	this.prenom = prenom;
+	this.libelleGroupe = libelleGroupe;
+	this.deuxiemePrenom = deuxiemePrenom;
+	this.troisiemePrenom = troisiemePrenom;
+	this.civilite = civilite;
+	this.sexe = sexe;
+	this.dateDeNaissance = dateDeNaissance;
+	this.villeDeNaissance = villeDeNaissance;
+	this.departementDeNaissance = departementDeNaissance;
+	this.paysDeNaissance = paysDeNaissance;
+	this.nationalite = nationalite;
+	this.boursierDesLycees = boursierDesLycees;
+	this.boursier = boursier;
+	this.boursierCertifie = boursierCertifie;
+	this.nombreDePartsOuEchelon = nombreDePartsOuEchelon;
+	this.aCBCode = aCBCode;
+	this.profilDuCandidat = profilDuCandidat;
+	this.typeEtablissement = typeEtablissement;
+	this.contratEtablissement = contratEtablissement;
+	this.uAIEtablissement = uAIEtablissement;
+	this.libelleEtablissement = libelleEtablissement;
+	this.communeEtablissement = communeEtablissement;
+	this.departementEtablissement = departementEtablissement;
+	this.paysEtablissement = paysEtablissement;
+	this.telephoneEtablissement = telephoneEtablissement;
+	this.faxEtablissement = faxEtablissement;
+	this.niveauDEtudeActuelle = niveauDEtudeActuelle;
+	this.numeroINE = numeroINE;
+	this.numeroCEF = numeroCEF;
+	this.typeDeFormation = typeDeFormation;
+	this.serieDomaineFiliere = serieDomaineFiliere;
+	this.classe = classe;
+	this.optionInternationale = optionInternationale;
+	this.dominante = dominante;
+	this.specialiteMentionVoie = specialiteMentionVoie;
+	this.lV1Scolarite = lV1Scolarite;
+	this.lV2Scolarite = lV2Scolarite;
+	this.lV3Scolarite = lV3Scolarite;
+	this.option1 = option1;
+	this.option2 = option2;
+	this.diplome = diplome;
+	this.serieDiplome = serieDiplome;
+	this.dominanteDiplome = dominanteDiplome;
+	this.specialiteDiplome = specialiteDiplome;
+	this.mentionDiplome = mentionDiplome;
+	this.moisEtAnneeDObtentionDuBac = moisEtAnneeDObtentionDuBac;
+	this.academieDuBac = academieDuBac;
+	this.lV1Bac = lV1Bac;
+	this.lV2Bac = lV2Bac;
+	this.optionDuBac = optionDuBac;
+	this.diplomeEtranger = diplomeEtranger;
+	this.testDeFrançais = testDeFrançais;
+	this.niveauDeFrançais = niveauDeFrançais;
+	this.dateTestDeFrançais = dateTestDeFrançais;
+	this.amenagementHandicap = amenagementHandicap;
+	this.dateDeValidation = dateDeValidation;
+	this.candidatureValideeON = candidatureValideeON;
+	this.sportifDeHautNiveau = sportifDeHautNiveau;
+	this.artisteDeHautNiveau = artisteDeHautNiveau;
+	this.dateInscription = dateInscription;
+	this.dateDImpression = dateDImpression;
+	this.ficheImprimeeON = ficheImprimeeON;
+	this.eligibleALaPolitiqueDeLaVille = eligibleALaPolitiqueDeLaVille;
+	this.ficheDeReorientation = ficheDeReorientation;
+	this.anneeDEntreeEnSeconde = anneeDEntreeEnSeconde;
+	this.dossierDematerialise = dossierDematerialise;
+	this.dossierPapier = dossierPapier;
+    }
+
+    public Long getId() {
+	return id;
+    }
+
+    public void setId(Long id) {
+	this.id = id;
+    }
+
     public String getGroupe() {
 	return groupe;
     }

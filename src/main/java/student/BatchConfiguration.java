@@ -1,84 +1,78 @@
 package student;
 
+import java.io.IOException;
+
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
 import org.springframework.batch.core.launch.support.RunIdIncrementer;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.builder.FlatFileItemReaderBuilder;
-import org.springframework.batch.item.file.mapping.BeanWrapperFieldSetMapper;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import student.model.Student;
-import utils.MyReflectionUtils;
+import student.model.StudentReader;
+import student.model.StudentRepository;
+import student.model.StudentWriter;
+import student.tasks.ArchiveFileTask;
 
 @Configuration
 @EnableBatchProcessing
 public class BatchConfiguration {
 
     @Autowired
-    public JobBuilderFactory jobBuilderFactory;
+    private JobBuilderFactory jobBuilderFactory;
 
     @Autowired
-    public StepBuilderFactory stepBuilderFactory;
+    private StepBuilderFactory stepBuilderFactory;
+    
+    @Autowired
+    private StudentRepository studentRepository;
 
+    @Value("${file.input-path}")
+    private Resource inputFile;
+    
+    @Value("${file.archive-directory}")
+    private FileSystemResource archiveDirectory;
+    
     @Bean
-    public DelimitedLineTokenizer lineTokenizer() {
-	DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer(DelimitedLineTokenizer.DELIMITER_TAB);
-	tokenizer.setNames(MyReflectionUtils.getFieldsFromClass(Student.class));
-	return tokenizer;
+    public StudentReader reader() throws IOException {
+	return new StudentReader (inputFile);
+    }
+    
+    @Bean
+    public StudentWriter writer() throws Exception {
+        return new StudentWriter(studentRepository);
     }
 
     @Bean
-    public DefaultLineMapper<Student> lineMapper() {
-	DefaultLineMapper<Student> lineMapper = new DefaultLineMapper<>();
-	lineMapper.setLineTokenizer(lineTokenizer());
-	lineMapper.setFieldSetMapper(new BeanWrapperFieldSetMapper<Student>() {
-	    {
-		setTargetType(Student.class);
-	    }
-	});
-	return lineMapper;
-    }
-
-    @Bean
-    public FlatFileItemReader<Student> reader() {
-	return new FlatFileItemReaderBuilder<Student>().name("personItemReader")
-		.resource(new ClassPathResource("sample-data.csv"))
-		.linesToSkip(1)
-		.lineMapper(lineMapper())
-		.build();
-    }
-
-    @Bean
-    public ItemWriter<Student> writer() throws Exception {
-        return new StudentWriter();
-    }
-
-    @Bean
-    public Job importUserJob(JobCompletionNotificationListener listener, Step step1) {
+    public Job importUserJob(JobCompletionNotificationListener listener, Step step1_readFileWriteDB, Step step2_archiveFile) {
 	return jobBuilderFactory.get("importUserJob")
 		.incrementer(new RunIdIncrementer())
 		.listener(listener)
-		.flow(step1)
-		.end()
+		.start(step1_readFileWriteDB)
+		.next(step2_archiveFile)
 		.build();
     }
 
     @Bean
-    public Step step1(StudentRepository repository) throws Exception {
-	return stepBuilderFactory.get("step1")
+    public Step step1_readFileWriteDB(StudentRepository repository) throws Exception {
+	return stepBuilderFactory.get("step1_readFileWriteDB")
 		.<Student, Student>chunk(10)
 		.reader(reader())
 		.writer(writer())
+		.build();
+    }
+    
+    @Bean
+    public Step step2_archiveFile() throws Exception {
+	return stepBuilderFactory.get("step2_archiveFile")
+		.tasklet(new ArchiveFileTask(inputFile, archiveDirectory))
 		.build();
     }
 }

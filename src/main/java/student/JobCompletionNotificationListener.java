@@ -8,7 +8,8 @@ import org.springframework.batch.core.listener.JobExecutionListenerSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import utils.MyReflectionUtils;
+import student.model.StudentRepository;
+import student.utils.MyReflectionUtils;
 
 @Component
 public class JobCompletionNotificationListener extends JobExecutionListenerSupport {

@@ -1,3 +1,6 @@
+file:
+  input-path: sample-data.csv
+  archive-directory: C:/temp/
 spring:
   datasource:
     url: jdbc:postgresql://10.10.100.100:5432/postgres

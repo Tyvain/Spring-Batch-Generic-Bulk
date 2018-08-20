@@ -1,4 +1,4 @@
-package utils;
+package student.utils;
 
 import java.beans.IntrospectionException;
 import java.beans.Introspector;

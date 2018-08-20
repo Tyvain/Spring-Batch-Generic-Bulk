@@ -6,14 +6,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import student.model.Student;
-import utils.MyReflectionUtils;
+import student.utils.MyReflectionUtils;
 
 @SpringBootApplication
 public class Application {
-    private static final Logger log = LoggerFactory.getLogger(JobCompletionNotificationListener.class);
-    
+    private static final Logger log = LoggerFactory.getLogger(Application.class);
+
     public static void main(String[] args) throws Exception {
-	log.info("number of field in Student:" + MyReflectionUtils.getFieldsFromClass(Student.class).length);	
-        SpringApplication.run(Application.class, args);
+	log.info("number of field in Student:" + MyReflectionUtils.getFieldsFromClass(Student.class).length);
+	SpringApplication.run(Application.class, args);
     }
 }

@@ -8,6 +8,7 @@ spring:
     password: Parcoursup123!
   batch:
     initialize-schema: always
+    job.enabled: false
   jpa:
     hibernate:
       ddl-auto: update
